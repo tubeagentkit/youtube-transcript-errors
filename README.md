@@ -52,6 +52,8 @@ Pages and this table are generated from `data/errors.yaml` and `data/status.json
 
 Corrections are welcome, including from the maintainers of any tool mentioned. See [CONTRIBUTING.md](CONTRIBUTING.md). Facts need a source: a line of the tool's source, an output you captured (with date and network), or a link.
 
+A shorter, guide-style version with a retry table and an error-handling snippet is on the maintainers' blog: [YouTube Transcript Errors Explained](https://getyoutubetranscript.com/blog/youtube-transcript-api-errors-explained). This repository stays the full reference.
+
 ## Who maintains this
 
 The team behind [GetYouTubeTranscript](https://getyoutubetranscript.com), a hosted transcript API, which is one of the options listed above. This repository describes the tools in general and takes pull requests from anyone. MIT licensed.
