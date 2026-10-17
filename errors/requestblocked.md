@@ -6,7 +6,7 @@ Same text as IpBlocked. IpBlocked is a subclass of RequestBlocked.
 
 Raised by `youtube-transcript-api` (1.2.4 read) as `RequestBlocked`, a subclass of `CouldNotRetrieveTranscript`.
 
-**Status:** Not reproduced yet
+**Status:** Reproduced on 2026-10-17
 
 ## What it means
 
@@ -35,7 +35,9 @@ Nothing recorded yet. If you know what another tool prints for this situation, p
 
 ## Verification history
 
-No runs recorded yet. `verify/verify.py` records one when it can reproduce the error.
+| Date | Environment | Library | Result | What was observed |
+|---|---|---|---|---|
+| 2026-10-17 | GitHub Actions runner (ubuntu-latest, hosted cloud IP) | 1.2.4 | Reproduced | raised while trying the TranscriptsDisabled repro |
 
 ---
 

@@ -4,7 +4,7 @@
 
 Raised by `youtube-transcript-api` (1.2.4 read) as `TranscriptsDisabled`, a subclass of `CouldNotRetrieveTranscript`.
 
-**Status:** Reproduced on 2026-10-17
+**Status:** Reproduced on 2026-10-17 (latest attempt 2026-10-17 was blocked)
 
 ## What it means
 
@@ -46,6 +46,7 @@ Note: yt-dlp reports a different error for the same ID (see below), so the two t
 
 | Date | Environment | Library | Result | What was observed |
 |---|---|---|---|---|
+| 2026-10-17 | GitHub Actions runner (ubuntu-latest, hosted cloud IP) | 1.2.4 | Inconclusive (network blocked) | RequestBlocked raised instead |
 | 2026-10-17 | home network, India (residential) | 1.2.4 | Reproduced | TranscriptsDisabled raised |
 | 2026-10-17 | home network, India (residential) | 1.2.4 | Reproduced | TranscriptsDisabled raised for video XqZsoesa55w. yt-dlp printed 'This video is not available' for the same ID. |
 
