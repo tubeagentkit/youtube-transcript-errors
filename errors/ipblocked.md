@@ -22,7 +22,7 @@ No fixed video reproduces it. It depends on the network the request comes from: 
 
 ## What to do
 
-- Stop and wait. Blocks on a single IP often lift after some hours, so back off instead of retrying in a loop.
+- Stop and wait. How long a block lasts varies. On one home IP (2026-10-17) it lifted after roughly 25 minutes and came back soon after requests resumed at about ten a minute, so back off and slow down instead of retrying in a loop.
 - Run the code from a different network, for example a home or office connection instead of a cloud server.
 - Send the requests through a proxy provider. The library supports proxy configuration.
 - Cache what you already fetched and fetch each video once.

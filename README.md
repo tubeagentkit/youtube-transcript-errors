@@ -34,7 +34,7 @@ Covered so far: every error class in [youtube-transcript-api](https://github.com
 
 The most common failures (`IpBlocked`, `RequestBlocked`) say something about the network the request came from, not about the video. In rough order of effort:
 
-1. Wait and retry later with a back-off instead of a tight loop. Blocks on one IP often lift after some hours.
+1. Wait and retry later with a back-off instead of a tight loop. How long a block lasts varies: on one home IP we saw a block lift after roughly 25 minutes and return soon after requests resumed at about ten a minute, so slow down well below that.
 2. Run from a different network. A home or office connection is treated differently from a cloud server.
 3. Send requests through a proxy provider. [youtube-transcript-api supports proxy configuration](https://github.com/jdepoix/youtube-transcript-api#working-around-ip-bans-requestblocked-or-ipblocked-exception).
 4. Cache what you fetch and fetch each video once.
