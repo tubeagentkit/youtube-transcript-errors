@@ -81,7 +81,7 @@
         "env": "home network, India (residential)",
         "lib_version": "1.2.4",
         "result": "reproduced",
-        "observed": "IpBlocked raised for two videos after about a day of repeated test requests from the same IP. yt-dlp still fetched subtitles from that IP at the same time. The block had lifted a few hours later."
+        "observed": "IpBlocked raised for two videos after many test requests from the same IP that day. yt-dlp fetched subtitles from that IP a few minutes later, and the library worked again after roughly 25 minutes."
       }
     ]
   },

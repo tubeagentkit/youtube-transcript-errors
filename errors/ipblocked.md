@@ -43,7 +43,7 @@ No fixed video reproduces it. It depends on the network the request comes from: 
 
 | Date | Environment | Library | Result | What was observed |
 |---|---|---|---|---|
-| 2026-10-17 | home network, India (residential) | 1.2.4 | Reproduced | IpBlocked raised for two videos after about a day of repeated test requests from the same IP. yt-dlp still fetched subtitles from that IP at the same time. The block had lifted a few hours later. |
+| 2026-10-17 | home network, India (residential) | 1.2.4 | Reproduced | IpBlocked raised for two videos after many test requests from the same IP that day. yt-dlp fetched subtitles from that IP a few minutes later, and the library worked again after roughly 25 minutes. |
 
 ---
 

@@ -8,7 +8,7 @@ Raised by `youtube-transcript-api` (1.2.4 read) as `FailedToCreateConsentCookie`
 
 ## What it means
 
-Requests from some regions, notably the EU and UK, first get a consent screen.
+In some regions YouTube shows a cookie consent screen before serving the page.
 
 ## What triggers it
 

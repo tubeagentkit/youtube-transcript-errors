@@ -249,7 +249,7 @@ errors:
     base: CouldNotRetrieveTranscript
     message: "Failed to automatically give consent to saving cookies"
     trigger: "YouTube returned its cookie consent page (`consent.youtube.com`), the library could not extract the consent token, or the page still showed consent after the cookie was set."
-    meaning: "Requests from some regions, notably the EU and UK, first get a consent screen."
+    meaning: "In some regions YouTube shows a cookie consent screen before serving the page."
     repro:
       kind: environment
       text: "Depends on the region of the requesting IP."
