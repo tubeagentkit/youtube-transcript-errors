@@ -1,0 +1,122 @@
+{
+  "TranscriptsDisabled": {
+    "runs": [
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "TranscriptsDisabled raised"
+      },
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "TranscriptsDisabled raised for video XqZsoesa55w. yt-dlp printed 'This video is not available' for the same ID."
+      }
+    ]
+  },
+  "VideoUnavailable": {
+    "runs": [
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "VideoUnavailable raised"
+      },
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "VideoUnavailable raised for ID aaaaaaaaaaa."
+      }
+    ]
+  },
+  "VideoUnplayable": {
+    "runs": [
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "VideoUnplayable raised"
+      },
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "VideoUnplayable raised for live stream jfKfPfyJRdk (reason text not recorded)."
+      }
+    ]
+  },
+  "IpBlocked": {
+    "runs": [
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "IpBlocked raised for two videos after about a day of repeated test requests from the same IP. yt-dlp still fetched subtitles from that IP at the same time. The block had lifted a few hours later."
+      }
+    ]
+  },
+  "InvalidVideoId": {
+    "runs": [
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "InvalidVideoId raised"
+      }
+    ]
+  },
+  "NoTranscriptFound": {
+    "runs": [
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "NoTranscriptFound raised"
+      }
+    ]
+  },
+  "NotTranslatable": {
+    "runs": [
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "NotTranslatable raised"
+      }
+    ]
+  },
+  "TranslationLanguageNotAvailable": {
+    "runs": [
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "TranslationLanguageNotAvailable raised"
+      }
+    ]
+  },
+  "AgeRestricted": {
+    "runs": [
+      {
+        "date": "2026-10-17",
+        "env": "home network, India (residential)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "AgeRestricted raised"
+      }
+    ]
+  }
+}

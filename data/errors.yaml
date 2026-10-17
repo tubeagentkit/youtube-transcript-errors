@@ -1,0 +1,299 @@
+# Source of truth for every page in errors/ and the table in README.md.
+# Edit this file, then run: python scripts/build.py
+# Facts marked "source" were read in youtube_transcript_api 1.2.4 (_transcripts.py / _errors.py).
+# Observations (what a tool printed, on which date and network) live in data/status.json, not here.
+
+tool: youtube-transcript-api
+tool_url: https://github.com/jdepoix/youtube-transcript-api
+tool_version_read: "1.2.4"
+
+errors:
+  - name: IpBlocked
+    base: RequestBlocked
+    message: "YouTube is blocking requests from your IP."
+    message_detail: "The library's message goes on to list the usual causes: too many requests from the IP, or requests coming from a cloud provider IP (AWS, Google Cloud Platform, Azure and similar)."
+    trigger: "YouTube answers with HTTP 429, or the page it returns contains a reCAPTCHA form (`class=\"g-recaptcha\"`)."
+    meaning: "YouTube refused to serve this IP address. The video itself may be perfectly fine and fetchable from another network."
+    repro:
+      kind: environment
+      text: "No fixed video reproduces it. It depends on the network the request comes from: send enough requests from one IP, or run from a datacenter IP."
+    actions:
+      - "Stop and wait. Blocks on a single IP often lift after some hours, so back off instead of retrying in a loop."
+      - "Run the code from a different network, for example a home or office connection instead of a cloud server."
+      - "Send the requests through a proxy provider. The library supports proxy configuration."
+      - "Cache what you already fetched and fetch each video once."
+      - "Use a hosted transcript service so the blocked IP is not yours (see the list in the README)."
+    other_tools:
+      - tool: yt-dlp
+        text: "Bot checks surface as `Sign in to confirm you're not a bot` (HTTP 429 and sign-in walls are reported differently from the library)."
+        verified: false
+    related: [RequestBlocked, YouTubeRequestFailed]
+
+  - name: RequestBlocked
+    base: CouldNotRetrieveTranscript
+    message: "YouTube is blocking requests from your IP."
+    message_detail: "Same text as IpBlocked. IpBlocked is a subclass of RequestBlocked."
+    trigger: "YouTube's playability status is `LOGIN_REQUIRED` and the reason is `Sign in to confirm you’re not a bot`."
+    meaning: "YouTube decided the request looks automated and asked for a signed-in session. This is a bot check, not a problem with the video."
+    repro:
+      kind: environment
+      text: "Environment dependent, like IpBlocked. Not reproducible on demand."
+    actions:
+      - "Same options as IpBlocked: wait, change network, use a proxy provider, cache, or use a hosted service."
+    other_tools: []
+    related: [IpBlocked, AgeRestricted]
+
+  - name: TranscriptsDisabled
+    base: CouldNotRetrieveTranscript
+    message: "Subtitles are disabled for this video"
+    trigger: "The video's player data has no caption track list (`playerCaptionsTracklistRenderer` is missing, or has no `captionTracks`)."
+    meaning: "YouTube is not offering any caption track for this video to this client. If the page in a browser shows no \"Show transcript\" button either, there is nothing for any tool to fetch."
+    repro:
+      kind: video
+      video_id: "XqZsoesa55w"
+      code: |
+        from youtube_transcript_api import YouTubeTranscriptApi
+        YouTubeTranscriptApi().fetch("XqZsoesa55w")
+      caveat: "yt-dlp reports a different error for the same ID (see below), so the two tools disagree about this video. Treat it as a repro of the library's behaviour, not as proof that the video has captions disabled."
+    actions:
+      - "Open the video in a browser and look for \"Show transcript\". If it is missing, no caption data exists to fetch."
+      - "If you still need text, transcribe the audio with a speech-to-text tool."
+      - "If it is shown in the browser but the library raises this, try again later or from another network and compare with another tool."
+    other_tools:
+      - tool: yt-dlp
+        text: "`ERROR: [youtube] XqZsoesa55w: This video is not available`"
+        verified: true
+        date: "2026-10-17"
+        env: "home network, India"
+    related: [NoTranscriptFound, VideoUnavailable]
+
+  - name: NoTranscriptFound
+    base: CouldNotRetrieveTranscript
+    message: "No transcripts were found for any of the requested language codes: {requested_language_codes}"
+    message_detail: "The message continues with the list of transcripts that are available for the video."
+    trigger: "None of the language codes passed in `languages` matches a manual or automatic caption track on the video."
+    meaning: "The video has captions, just not in the language you asked for. The error text lists what is available."
+    repro:
+      kind: video
+      video_id: "jNQXAC9IVRw"
+      code: |
+        from youtube_transcript_api import YouTubeTranscriptApi
+        YouTubeTranscriptApi().fetch("jNQXAC9IVRw", languages=["xx"])
+    actions:
+      - "Read the available languages in the error text, or call `list(video_id)` and pick one."
+      - "Pass several codes in order of preference, for example `languages=[\"de\", \"en\"]`."
+      - "Ask for a translated track with `.translate(code)` if the transcript is translatable."
+    other_tools: []
+    related: [NotTranslatable, TranslationLanguageNotAvailable]
+
+  - name: NotTranslatable
+    base: CouldNotRetrieveTranscript
+    message: "The requested language is not translatable"
+    trigger: "`translate()` was called on a transcript whose list of translation languages is empty."
+    meaning: "That caption track does not offer machine translation."
+    repro:
+      kind: video
+      video_id: "jNQXAC9IVRw"
+      code: |
+        from youtube_transcript_api import YouTubeTranscriptApi
+        track = YouTubeTranscriptApi().list("jNQXAC9IVRw").find_transcript(["en"])
+        track.translate("de")
+    actions:
+      - "Check `transcript.is_translatable` before calling `translate()`."
+      - "Fetch another track, or translate the text yourself."
+    other_tools: []
+    related: [TranslationLanguageNotAvailable]
+
+  - name: TranslationLanguageNotAvailable
+    base: CouldNotRetrieveTranscript
+    message: "The requested translation language is not available"
+    trigger: "`translate(language_code)` was called with a code that is not in the track's translation language list."
+    meaning: "The track can be translated, but not into that language."
+    repro:
+      kind: video
+      video_id: "aircAruvnKk"
+      code: |
+        from youtube_transcript_api import YouTubeTranscriptApi
+        track = YouTubeTranscriptApi().list("aircAruvnKk").find_transcript(["en"])
+        track.translate("xx").fetch()
+    actions:
+      - "Read `transcript.translation_languages` for the codes the track supports."
+      - "The set of languages YouTube offers can differ between videos and over time, so do not hard-code it."
+    other_tools: []
+    related: [NotTranslatable, NoTranscriptFound]
+
+  - name: AgeRestricted
+    base: CouldNotRetrieveTranscript
+    message: "This video is age-restricted. Therefore, you are unable to retrieve transcripts for it without authenticating yourself."
+    message_detail: "The library adds that cookie authentication is temporarily unsupported."
+    trigger: "YouTube's playability status is `LOGIN_REQUIRED` and the reason is `This video may be inappropriate for some users.`"
+    meaning: "YouTube only serves this video to signed-in users, so an anonymous request gets no caption data."
+    repro:
+      kind: video
+      video_id: "R8t0blHwhIQ"
+      code: |
+        from youtube_transcript_api import YouTubeTranscriptApi
+        YouTubeTranscriptApi().fetch("R8t0blHwhIQ")
+    actions:
+      - "Check whether another tool can use your own signed-in browser session. yt-dlp documents `--cookies-from-browser`; use only an account you are allowed to use, since automated use of an account can be restricted by YouTube."
+      - "Otherwise there is no anonymous route to that video's captions."
+    other_tools:
+      - tool: yt-dlp
+        text: "`ERROR: [youtube] R8t0blHwhIQ: Sign in to confirm your age. Use --cookies-from-browser or --cookies for the authentication.`"
+        verified: true
+        date: "2026-10-17"
+        env: "home network, India"
+    related: [RequestBlocked, VideoUnplayable]
+
+  - name: PoTokenRequired
+    base: CouldNotRetrieveTranscript
+    message: "The requested video cannot be retrieved without a PO Token. If this happens, please open a GitHub issue!"
+    trigger: "The caption track URL contains `&exp=xpe`."
+    meaning: "For this track YouTube expects a proof-of-origin token that the library does not produce."
+    repro:
+      kind: unknown
+      text: "Reported by users for some videos. No stable video ID recorded yet. See the library's issue tracker, for example https://github.com/jdepoix/youtube-transcript-api/issues/592."
+    actions:
+      - "Check the library's open issues for the current state."
+      - "Try another tool or a signed-in browser session to see whether the track is available at all."
+    other_tools: []
+    related: [YouTubeRequestFailed]
+
+  - name: VideoUnavailable
+    base: CouldNotRetrieveTranscript
+    message: "The video is no longer available"
+    trigger: "YouTube reports status `ERROR` with the reason `This video is unavailable`, and the ID passed in does not start with `http://` or `https://`."
+    meaning: "No such public video: it was deleted, made private, blocked in the region, or the ID is wrong."
+    repro:
+      kind: video
+      video_id: "aaaaaaaaaaa"
+      code: |
+        from youtube_transcript_api import YouTubeTranscriptApi
+        YouTubeTranscriptApi().fetch("aaaaaaaaaaa")
+    actions:
+      - "Check the ID: it is the 11 characters after `v=` in a watch URL."
+      - "Open the video in a browser from the same region."
+    other_tools:
+      - tool: yt-dlp
+        text: "`ERROR: [youtube] aaaaaaaaaaa: This video is unavailable`"
+        verified: true
+        date: "2026-10-17"
+        env: "home network, India"
+    related: [InvalidVideoId, VideoUnplayable]
+
+  - name: InvalidVideoId
+    base: CouldNotRetrieveTranscript
+    message: "You provided an invalid video id. Make sure you are using the video id and NOT the url!"
+    trigger: "Same condition as VideoUnavailable, but the ID passed in starts with `http://` or `https://`."
+    meaning: "A full URL was passed where the library wants the 11-character video ID."
+    repro:
+      kind: video
+      video_id: "jNQXAC9IVRw"
+      code: |
+        from youtube_transcript_api import YouTubeTranscriptApi
+        YouTubeTranscriptApi().fetch("https://www.youtube.com/watch?v=jNQXAC9IVRw")
+    actions:
+      - "Pass only the ID: `fetch(\"jNQXAC9IVRw\")`."
+      - "Extract the ID from user input before calling (`v=` parameter, `youtu.be/` path, `/shorts/` path)."
+    other_tools: []
+    related: [VideoUnavailable]
+
+  - name: VideoUnplayable
+    base: CouldNotRetrieveTranscript
+    message: "The video is unplayable for the following reason: {reason}"
+    message_detail: "YouTube's own reason text follows, with extra detail when YouTube provides it."
+    trigger: "YouTube's playability status is neither OK nor one of the cases handled by the more specific errors above."
+    meaning: "YouTube will not play the video to this client. Live streams that are not archived and premieres that have not started are common cases."
+    repro:
+      kind: video
+      video_id: "jfKfPfyJRdk"
+      code: |
+        from youtube_transcript_api import YouTubeTranscriptApi
+        YouTubeTranscriptApi().fetch("jfKfPfyJRdk")
+      caveat: "That ID is a 24/7 live stream. It can go offline or change, so this repro may stop working."
+    actions:
+      - "Read the reason text in the error; it is YouTube's wording."
+      - "For a live stream, wait until it ends and the recording is processed."
+    other_tools: []
+    related: [VideoUnavailable, AgeRestricted]
+
+  - name: YouTubeRequestFailed
+    base: CouldNotRetrieveTranscript
+    message: "Request to YouTube failed: {reason}"
+    trigger: "A request returned an HTTP error status other than 429 (429 is reported as IpBlocked)."
+    meaning: "A network or HTTP-level failure, for example 403, 5xx, or a proxy error."
+    repro:
+      kind: environment
+      text: "Depends on the network and any proxy in between."
+    actions:
+      - "Read the status code in the reason. A 403 behaves like a block, a 5xx is usually temporary."
+      - "If you use a proxy, test the proxy on its own first."
+    other_tools: []
+    related: [IpBlocked, PoTokenRequired]
+
+  - name: YouTubeDataUnparsable
+    base: CouldNotRetrieveTranscript
+    message: "The data required to fetch the transcript is not parsable. This should not happen, please open an issue (make sure to include the video ID)!"
+    trigger: "The page was fetched, but an embedded API key value that the library searches the page for is not in it, and the page is not the reCAPTCHA page."
+    meaning: "YouTube served something the parser does not recognise: a changed page layout, or a block page in a form the library does not detect."
+    repro:
+      kind: environment
+      text: "Not reproducible on demand."
+    actions:
+      - "Open an issue on the library's tracker with the video ID, as the message says."
+      - "Retry later or from another network, in case it was a block page."
+    other_tools: []
+    related: [IpBlocked, YouTubeRequestFailed]
+
+  - name: FailedToCreateConsentCookie
+    base: CouldNotRetrieveTranscript
+    message: "Failed to automatically give consent to saving cookies"
+    trigger: "YouTube returned its cookie consent page (`consent.youtube.com`), the library could not extract the consent token, or the page still showed consent after the cookie was set."
+    meaning: "Requests from some regions, notably the EU and UK, first get a consent screen."
+    repro:
+      kind: environment
+      text: "Depends on the region of the requesting IP."
+    actions:
+      - "Run the request from a region without the consent page, or retry."
+      - "Report it to the library with the region and video ID if it persists."
+    other_tools: []
+    related: [YouTubeDataUnparsable]
+
+  - name: CookieError
+    base: YouTubeTranscriptApiException
+    message: "(no message defined)"
+    trigger: "Defined in `_errors.py` but never raised anywhere in the 14 source files of version 1.2.4."
+    meaning: "Left over from the cookie-based authentication of the 0.x versions. In 1.2.4 the AgeRestricted message says cookie authentication is temporarily unsupported."
+    repro:
+      kind: none
+      text: "Cannot be triggered in 1.2.4."
+    actions:
+      - "Do not write code that depends on catching it."
+    other_tools: []
+    related: [CookieInvalid, CookiePathInvalid, AgeRestricted]
+
+  - name: CookieInvalid
+    base: CookieError
+    message: "(defined, see source)"
+    trigger: "Defined but never raised in 1.2.4."
+    meaning: "Legacy, like CookieError."
+    repro:
+      kind: none
+      text: "Cannot be triggered in 1.2.4."
+    actions:
+      - "Ignore it in 1.x code."
+    other_tools: []
+    related: [CookieError, CookiePathInvalid]
+
+  - name: CookiePathInvalid
+    base: CookieError
+    message: "(defined, see source)"
+    trigger: "Defined but never raised in 1.2.4."
+    meaning: "Legacy, like CookieError."
+    repro:
+      kind: none
+      text: "Cannot be triggered in 1.2.4."
+    actions:
+      - "Ignore it in 1.x code."
+    other_tools: []
+    related: [CookieError, CookieInvalid]
