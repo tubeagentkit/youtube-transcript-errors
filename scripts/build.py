@@ -69,6 +69,10 @@ def page(err: dict) -> str:
         "",
         err["trigger"] + " (read from the library source)",
         "",
+    ]
+    if err.get("common_cause"):
+        out += ["## A common cause", "", err["common_cause"].strip(), ""]
+    out += [
         "## Reproduce",
         "",
     ]

@@ -73,6 +73,12 @@ errors:
     message_detail: "The message continues with the list of transcripts that are available for the video."
     trigger: "None of the language codes passed in `languages` matches a manual or automatic caption track on the video."
     meaning: "The video has captions, just not in the language you asked for. The error text lists what is available."
+    common_cause: |
+      The language code has to match exactly. A request for `es` does not match a track whose code is `es-ES`, and a request for `en` does not match `en-US`, so a video that plainly has Spanish or English captions can raise this error.
+
+      Checked on 2026-10-18 with video `8YIZ_2QA1P8`, whose only track is `es-ES`: `YouTubeTranscriptApi().fetch("8YIZ_2QA1P8", languages=["es"])` raises `NoTranscriptFound`, and `languages=["es-ES"]` works. yt-dlp behaves the same way: `--sub-langs es` prints `There are no subtitles for the requested languages` and exits with status 0, while the pattern `--sub-langs "es(-[A-Z0-9]+)?"` downloads the `es-ES` track. Note that yt-dlp exits successfully when it finds nothing, so check that a subtitle file was actually written.
+
+      Call `list(video_id)` first to see the exact codes, or pass every variant you accept, for example `languages=["es", "es-ES", "es-419"]`.
     repro:
       kind: video
       video_id: "jNQXAC9IVRw"
@@ -80,10 +86,15 @@ errors:
         from youtube_transcript_api import YouTubeTranscriptApi
         YouTubeTranscriptApi().fetch("jNQXAC9IVRw", languages=["xx"])
     actions:
-      - "Read the available languages in the error text, or call `list(video_id)` and pick one."
+      - "Read the available languages in the error text, or call `list(video_id)` and pick one. Regional codes such as `en-US` and `es-ES` count as different languages from `en` and `es`."
       - "Pass several codes in order of preference, for example `languages=[\"de\", \"en\"]`."
       - "Ask for a translated track with `.translate(code)` if the transcript is translatable."
-    other_tools: []
+    other_tools:
+      - tool: yt-dlp
+        text: "`There are no subtitles for the requested languages` (exit status 0) when `--sub-langs es` is asked of a video whose only track is `es-ES`."
+        verified: true
+        date: "2026-10-18"
+        env: "home network, India"
     related: [NotTranslatable, TranslationLanguageNotAvailable]
 
   - name: NotTranslatable
