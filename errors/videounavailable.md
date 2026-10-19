@@ -4,7 +4,7 @@
 
 Raised by `youtube-transcript-api` (1.2.4 read) as `VideoUnavailable`, a subclass of `CouldNotRetrieveTranscript`.
 
-**Status:** Reproduced on 2026-10-17 (latest attempt 2026-10-17 was blocked)
+**Status:** Reproduced on 2026-10-17 (latest attempt 2026-10-19 was blocked)
 
 ## What it means
 
@@ -43,6 +43,7 @@ YouTubeTranscriptApi().fetch("aaaaaaaaaaa")
 
 | Date | Environment | Library | Result | What was observed |
 |---|---|---|---|---|
+| 2026-10-19 | GitHub Actions runner (ubuntu-latest, hosted cloud IP) | 1.2.4 | Inconclusive (network blocked) | not attempted, RequestBlocked was raised earlier in this run |
 | 2026-10-17 | GitHub Actions runner (ubuntu-latest, hosted cloud IP) | 1.2.4 | Inconclusive (network blocked) | not attempted, RequestBlocked was raised earlier in this run |
 | 2026-10-17 | home network, India (residential) | 1.2.4 | Reproduced | VideoUnavailable raised |
 | 2026-10-17 | home network, India (residential) | 1.2.4 | Reproduced | VideoUnavailable raised for ID aaaaaaaaaaa. |

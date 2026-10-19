@@ -10,16 +10,16 @@ Covered so far: every error class in [youtube-transcript-api](https://github.com
 | Error | Base class | Status | Page |
 |---|---|---|---|
 | `IpBlocked` | `RequestBlocked` | Reproduced on 2026-10-17 | [IpBlocked](errors/ipblocked.md) |
-| `RequestBlocked` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 | [RequestBlocked](errors/requestblocked.md) |
-| `TranscriptsDisabled` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-17 was blocked) | [TranscriptsDisabled](errors/transcriptsdisabled.md) |
-| `NoTranscriptFound` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-17 was blocked) | [NoTranscriptFound](errors/notranscriptfound.md) |
-| `NotTranslatable` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-17 was blocked) | [NotTranslatable](errors/nottranslatable.md) |
-| `TranslationLanguageNotAvailable` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-17 was blocked) | [TranslationLanguageNotAvailable](errors/translationlanguagenotavailable.md) |
-| `AgeRestricted` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-17 was blocked) | [AgeRestricted](errors/agerestricted.md) |
+| `RequestBlocked` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-19 | [RequestBlocked](errors/requestblocked.md) |
+| `TranscriptsDisabled` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-19 was blocked) | [TranscriptsDisabled](errors/transcriptsdisabled.md) |
+| `NoTranscriptFound` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-19 was blocked) | [NoTranscriptFound](errors/notranscriptfound.md) |
+| `NotTranslatable` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-19 was blocked) | [NotTranslatable](errors/nottranslatable.md) |
+| `TranslationLanguageNotAvailable` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-19 was blocked) | [TranslationLanguageNotAvailable](errors/translationlanguagenotavailable.md) |
+| `AgeRestricted` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-19 was blocked) | [AgeRestricted](errors/agerestricted.md) |
 | `PoTokenRequired` | `CouldNotRetrieveTranscript` | Not reproduced yet | [PoTokenRequired](errors/potokenrequired.md) |
-| `VideoUnavailable` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-17 was blocked) | [VideoUnavailable](errors/videounavailable.md) |
-| `InvalidVideoId` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-17 was blocked) | [InvalidVideoId](errors/invalidvideoid.md) |
-| `VideoUnplayable` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-17 was blocked) | [VideoUnplayable](errors/videounplayable.md) |
+| `VideoUnavailable` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-19 was blocked) | [VideoUnavailable](errors/videounavailable.md) |
+| `InvalidVideoId` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-19 was blocked) | [InvalidVideoId](errors/invalidvideoid.md) |
+| `VideoUnplayable` | `CouldNotRetrieveTranscript` | Reproduced on 2026-10-17 (latest attempt 2026-10-19 was blocked) | [VideoUnplayable](errors/videounplayable.md) |
 | `YouTubeRequestFailed` | `CouldNotRetrieveTranscript` | Not reproduced yet | [YouTubeRequestFailed](errors/youtuberequestfailed.md) |
 | `YouTubeDataUnparsable` | `CouldNotRetrieveTranscript` | Not reproduced yet | [YouTubeDataUnparsable](errors/youtubedataunparsable.md) |
 | `FailedToCreateConsentCookie` | `CouldNotRetrieveTranscript` | Not reproduced yet | [FailedToCreateConsentCookie](errors/failedtocreateconsentcookie.md) |
