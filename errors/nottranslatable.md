@@ -4,7 +4,7 @@
 
 Raised by `youtube-transcript-api` (1.2.4 read) as `NotTranslatable`, a subclass of `CouldNotRetrieveTranscript`.
 
-**Status:** Reproduced on 2026-10-17 (latest attempt 2026-10-19 was blocked)
+**Status:** Reproduced on 2026-10-17 (latest attempt 2026-10-26 was blocked)
 
 ## What it means
 
@@ -41,6 +41,7 @@ Nothing recorded yet. If you know what another tool prints for this situation, p
 
 | Date | Environment | Library | Result | What was observed |
 |---|---|---|---|---|
+| 2026-10-26 | GitHub Actions runner (ubuntu-latest, hosted cloud IP) | 1.2.4 | Inconclusive (network blocked) | not attempted, RequestBlocked was raised earlier in this run |
 | 2026-10-19 | GitHub Actions runner (ubuntu-latest, hosted cloud IP) | 1.2.4 | Inconclusive (network blocked) | not attempted, RequestBlocked was raised earlier in this run |
 | 2026-10-17 | GitHub Actions runner (ubuntu-latest, hosted cloud IP) | 1.2.4 | Inconclusive (network blocked) | not attempted, RequestBlocked was raised earlier in this run |
 | 2026-10-17 | home network, India (residential) | 1.2.4 | Reproduced | NotTranslatable raised |
