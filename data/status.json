@@ -2,6 +2,13 @@
   "TranscriptsDisabled": {
     "runs": [
       {
+        "date": "2026-11-02",
+        "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
+        "lib_version": "1.2.4",
+        "result": "blocked",
+        "observed": "RequestBlocked raised instead"
+      },
+      {
         "date": "2026-10-26",
         "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
         "lib_version": "1.2.4",
@@ -41,6 +48,13 @@
   "VideoUnavailable": {
     "runs": [
       {
+        "date": "2026-11-02",
+        "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
+        "lib_version": "1.2.4",
+        "result": "blocked",
+        "observed": "not attempted, RequestBlocked was raised earlier in this run"
+      },
+      {
         "date": "2026-10-26",
         "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
         "lib_version": "1.2.4",
@@ -79,6 +93,13 @@
   },
   "VideoUnplayable": {
     "runs": [
+      {
+        "date": "2026-11-02",
+        "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
+        "lib_version": "1.2.4",
+        "result": "blocked",
+        "observed": "not attempted, RequestBlocked was raised earlier in this run"
+      },
       {
         "date": "2026-10-26",
         "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
@@ -130,6 +151,13 @@
   "InvalidVideoId": {
     "runs": [
       {
+        "date": "2026-11-02",
+        "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
+        "lib_version": "1.2.4",
+        "result": "blocked",
+        "observed": "not attempted, RequestBlocked was raised earlier in this run"
+      },
+      {
         "date": "2026-10-26",
         "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
         "lib_version": "1.2.4",
@@ -161,6 +189,13 @@
   },
   "NoTranscriptFound": {
     "runs": [
+      {
+        "date": "2026-11-02",
+        "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
+        "lib_version": "1.2.4",
+        "result": "blocked",
+        "observed": "not attempted, RequestBlocked was raised earlier in this run"
+      },
       {
         "date": "2026-10-26",
         "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
@@ -194,6 +229,13 @@
   "NotTranslatable": {
     "runs": [
       {
+        "date": "2026-11-02",
+        "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
+        "lib_version": "1.2.4",
+        "result": "blocked",
+        "observed": "not attempted, RequestBlocked was raised earlier in this run"
+      },
+      {
         "date": "2026-10-26",
         "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
         "lib_version": "1.2.4",
@@ -225,6 +267,13 @@
   },
   "TranslationLanguageNotAvailable": {
     "runs": [
+      {
+        "date": "2026-11-02",
+        "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
+        "lib_version": "1.2.4",
+        "result": "blocked",
+        "observed": "not attempted, RequestBlocked was raised earlier in this run"
+      },
       {
         "date": "2026-10-26",
         "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
@@ -258,6 +307,13 @@
   "AgeRestricted": {
     "runs": [
       {
+        "date": "2026-11-02",
+        "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
+        "lib_version": "1.2.4",
+        "result": "blocked",
+        "observed": "not attempted, RequestBlocked was raised earlier in this run"
+      },
+      {
         "date": "2026-10-26",
         "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
         "lib_version": "1.2.4",
@@ -289,6 +345,13 @@
   },
   "RequestBlocked": {
     "runs": [
+      {
+        "date": "2026-11-02",
+        "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
+        "lib_version": "1.2.4",
+        "result": "reproduced",
+        "observed": "raised while trying the TranscriptsDisabled repro"
+      },
       {
         "date": "2026-10-26",
         "env": "GitHub Actions runner (ubuntu-latest, hosted cloud IP)",
